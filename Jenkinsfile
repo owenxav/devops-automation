@@ -17,17 +17,15 @@ pipeline{
                 }
             }
         }
-        stage('Push Image to Docker Hub'){
+        stage('Push Image to Hub'){
             steps{
                 script{
-                    withCredentials([string(credentialsId: 'dockerhub-pwd', variable: 'dockerhub')]) {
-                    sh 'echo $DOCKERHUB_PASSWORD | docker login -u owenagboje --password-stdin'
+                 withCredentials([string(credentialsId: 'dockerhubpwd', variable: 'dockerhubpwd')]) {
+                 sh 'docker login -u owenagboje -p ${dockerhubpwd}'
 }
-                    sh 'docker push owenagboje/devops-integration .'
-
-
+                 sh 'docker push owenagboje/devops-integration'
                 }
             }
-        }   
+        }
     }
 }
